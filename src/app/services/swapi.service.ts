@@ -7,17 +7,23 @@ import { Observable } from 'rxjs';
 })
 export class SwapiService {
 
+  private readonly BASE_URL = 'https://swapi.dev/api';
+
   constructor(private http: HttpClient) { }
 
   getMovies(): Observable<any> {
-    return this.http.get('https://swapi.dev/api/films/');
+    return this.http.get(`${this.BASE_URL}/films/`);
   }
 
   getMovieDetails(id: number): Observable<any> {
-    return this.http.get(`https://swapi.dev/api/films/${id}/`);
+    return this.http.get(`${this.BASE_URL}/films/${id}/`);
+  }
+
+  getCharacters(): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/people/`);
   }
 
   getCharacterDetails(id: number): Observable<any> {
-    return this.http.get(`https://swapi.dev/api/people/${id}/`);
+    return this.http.get(`${this.BASE_URL}/people/${id}/`);
   }
 }
