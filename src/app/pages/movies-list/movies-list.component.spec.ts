@@ -4,11 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
-import { MoviesListComponent } from './movies-list.component';
 import { AppState } from '../../store';
+import { MoviesListComponent } from './movies-list.component';
 import * as moviesActions from '../../store/movies/movies.actions';
 import * as moviesSelectors from '../../store/movies/movies.selectors';
-import { mockMovies } from 'src/assets/mocks/mock-mocie-data';
+import { mockMovies } from 'src/assets/mocks/mock-movie-data';
 
 describe('MoviesListComponent', () => {
   let component: MoviesListComponent;

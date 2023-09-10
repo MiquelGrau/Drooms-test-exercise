@@ -1,5 +1,5 @@
 export class Character {
-  public readonly id: string; // Actualitzat perquè sigui un string
+  public readonly id: string;
 
   constructor(
     public name: string,
@@ -44,7 +44,7 @@ export class Character {
   }
 
   public static extractIdFromUrl(url: string): string {
-    const parts = url.split('/');
+    const parts = url ? url.split('/') : [];
     return parts[parts.length - 2];
   }
 }

@@ -39,8 +39,8 @@ export class Movie {
     );
   }
 
-  private static extractIdFromUrl(url: string): string {
-    const parts = url.split('/');
+  public static extractIdFromUrl(url: string): string {
+    const parts = url ? url.split('/') : [];
     return parts[parts.length - 2];
   }
 }

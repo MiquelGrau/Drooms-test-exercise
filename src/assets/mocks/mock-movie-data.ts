@@ -36,3 +36,4 @@ const rawMoviesData: RawMovieData[] = [
 ];
 
 export const mockMovies: Movie[] = rawMoviesData.map(data => Movie.fromJSON(data));
+export const mockMovie: Movie = Movie.fromJSON(rawMoviesData[0]);

@@ -26,10 +26,10 @@ import { CharactersEffects } from './store/characters/characters.effects';
     CharacterDetailComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    CommonModule,
     StoreModule.forRoot({
       ...reducers,
       router: routerReducer
