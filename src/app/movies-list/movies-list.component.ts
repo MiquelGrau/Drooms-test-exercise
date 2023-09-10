@@ -14,7 +14,8 @@ import { Movie } from '../models/movie.model';
 export class MoviesListComponent {
   movies$ = this.store.select(moviesSelectors.selectAllMovies);
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private store: Store<AppState>,
+              private router: Router) {}
 
   ngOnInit() {
     this.store.dispatch(moviesActions.loadMovies());

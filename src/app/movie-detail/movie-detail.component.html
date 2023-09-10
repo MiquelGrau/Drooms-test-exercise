@@ -1,1 +1,14 @@
-<p>movie-detail works!</p>
+<div class="container mt-4" *ngIf="movie$ | async as movie">
+  <h1>{{ movie.title }}</h1>
+  <p><strong>Director:</strong> {{ movie.director }}</p>
+  <p><strong>Producer:</strong> {{ movie.producer }}</p>
+  <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+  <h2>Opening Crawl</h2>
+  <p>{{ movie.opening_crawl }}</p>
+  <h3>Characters</h3>
+  <ul>
+    <li *ngFor="let character of movie.characters">
+      <!-- Link to character details -->
+    </li>
+  </ul>
+</div>
