@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store'; // Importa aquests
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 
 import { reducers, metaReducers } from './store';
 import { environment } from 'src/environments/environment';
@@ -29,13 +29,14 @@ import { CharactersEffects } from './store/characters/characters.effects';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    CommonModule,
     StoreModule.forRoot({
       ...reducers,
-      router: routerReducer // Afegeix aquesta línia
+      router: routerReducer
     }, { metaReducers }),
     ...(!environment.production ? [StoreDevtoolsModule.instrument()] : []),
     EffectsModule.forRoot([MoviesEffects, CharactersEffects]),
-    StoreRouterConnectingModule.forRoot(), // Afegeix aquesta línia
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

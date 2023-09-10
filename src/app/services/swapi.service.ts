@@ -11,19 +11,19 @@ export class SwapiService {
 
   constructor(private http: HttpClient) { }
 
-  getMovies(): Observable<any> {
+  getAllMovies(): Observable<any> {
     return this.http.get(`${this.BASE_URL}/films/`);
   }
 
-  getMovieDetails(id: number): Observable<any> {
+  getMovieDetails(id: string): Observable<any> {
     return this.http.get(`${this.BASE_URL}/films/${id}/`);
   }
 
-  getCharacters(): Observable<any> {
+  getAllCharacters(): Observable<any> {
     return this.http.get(`${this.BASE_URL}/people/`);
   }
 
-  getCharacterDetails(id: number): Observable<any> {
+  getCharacterDetails(id: string): Observable<any> {
     return this.http.get(`${this.BASE_URL}/people/${id}/`);
   }
 }

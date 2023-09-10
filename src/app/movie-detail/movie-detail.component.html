@@ -6,9 +6,12 @@
   <h2>Opening Crawl</h2>
   <p>{{ movie.opening_crawl }}</p>
   <h3>Characters</h3>
-  <ul>
-    <li *ngFor="let character of movie.characters">
-      <!-- Link to character details -->
-    </li>
-  </ul>
+
+  <div class="list-group" *ngIf="characters$ | async as characters">
+    <a [routerLink]="['/character', character.id]"
+       *ngFor="let character of characters"
+       class="list-group-item list-group-item-action">
+      {{ character.name }}
+    </a>
+  </div>
 </div>

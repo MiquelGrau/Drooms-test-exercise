@@ -15,7 +15,7 @@ export const selectCurrentMovie = createSelector(
   (state: MoviesState) => state.currentMovie
 );
 
-export const selectMovieById = (movieId: number) => createSelector(
+export const selectMovieById = (movieId: string) => createSelector(
   selectAllMovies,
   (movies: Movie[]) => movies.find(movie => movie.id === movieId)
 );

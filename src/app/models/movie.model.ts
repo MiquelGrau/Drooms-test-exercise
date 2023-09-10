@@ -1,5 +1,5 @@
 export class Movie {
-  public readonly id: number;
+  public readonly id: string;
 
   constructor(
     public title: string,
@@ -39,9 +39,9 @@ export class Movie {
     );
   }
 
-  private static extractIdFromUrl(url: string): number {
+  private static extractIdFromUrl(url: string): string {
     const parts = url.split('/');
-    return +parts[parts.length - 2];
+    return parts[parts.length - 2];
   }
 }
 

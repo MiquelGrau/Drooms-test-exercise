@@ -14,7 +14,7 @@ export class MoviesEffects {
 
   loadMovies$ = createEffect(() => this.actions$.pipe(
     ofType(moviesActions.loadMovies),
-    mergeMap(() => this.swapiService.getMovies()
+    mergeMap(() => this.swapiService.getAllMovies()
       .pipe(
         map(response => {
           const movies = response.results.map((movieData: RawMovieData) => Movie.fromJSON(movieData));
