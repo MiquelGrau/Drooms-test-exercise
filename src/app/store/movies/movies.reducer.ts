@@ -18,8 +18,8 @@ export const initialState: MoviesState = {
 
 export const moviesReducer = createReducer(
   initialState,
-  on(MoviesActions.loadMoviesSuccess, (state, { movies }) => ({ ...state, movies, isLoading: false })),
-  on(MoviesActions.loadMoviesFailure, (state, { error }) => ({ ...state, error, isLoading: false })),
+  on(MoviesActions.loadAllMoviesSuccess, (state, { movies }) => ({ ...state, movies, isLoading: false })),
+  on(MoviesActions.loadAllMoviesFailure, (state, { error }) => ({ ...state, error, isLoading: false })),
 
   on(MoviesActions.loadMovieDetails, (state) => ({ ...state, isLoading: true })),
   on(MoviesActions.loadMovieDetailsSuccess, (state, { movie }) => ({ ...state, currentMovie: movie, isLoading: false })),

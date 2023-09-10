@@ -4,16 +4,25 @@ import { Character } from '../../models/character.model';
 
 export interface CharactersState {
   characters: Character[];
+  currentCharacter: Character | null;
+  isLoading: boolean;
   error: any;
 }
 
 export const initialState: CharactersState = {
   characters: [],
+  currentCharacter: null,
+  isLoading: false,
   error: null
 };
 
 export const charactersReducer = createReducer(
   initialState,
-  on(CharactersActions.loadAllCharactersSuccess, (state, { characters }) => ({ ...state, characters })),
-  on(CharactersActions.loadAllCharactersFailure, (state, { error }) => ({ ...state, error }))
+
+  on(CharactersActions.loadAllCharactersSuccess, (state, { characters }) => ({ ...state, characters, isLoading: false })),
+  on(CharactersActions.loadAllCharactersFailure, (state, { error }) => ({ ...state, error, isLoading: false })),
+
+  on(CharactersActions.loadCharacterDetails, (state) => ({ ...state, isLoading: true })),
+  on(CharactersActions.loadCharacterDetailsSuccess, (state, { character }) => ({ ...state, currentCharacter: character, isLoading: false })),
+  on(CharactersActions.loadCharacterDetailsFailure, (state, { error }) => ({ ...state, error, isLoading: false, currentCharacter: null }))
 );

@@ -13,12 +13,12 @@ import { AppState } from '../index';
 export class MoviesEffects {
 
   loadMovies$ = createEffect(() => this.actions$.pipe(
-    ofType(moviesActions.loadMovies),
+    ofType(moviesActions.loadAllMovies),
     mergeMap(() => this.swapiService.getAllMovies()
       .pipe(
         map(response => {
           const movies = response.results.map((movieData: RawMovieData) => Movie.fromJSON(movieData));
-          return moviesActions.loadMoviesSuccess({ movies });
+          return moviesActions.loadAllMoviesSuccess({ movies });
         }),
         catchError(() => EMPTY)
       ))

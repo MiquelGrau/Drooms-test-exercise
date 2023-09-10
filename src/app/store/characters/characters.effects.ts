@@ -17,7 +17,7 @@ export class CharactersEffects {
     mergeMap(() => this.swapiService.getAllCharacters()
       .pipe(
         map(response => {
-          const characters = response.results.map((characterData: RawCharacterData) => Character.fromJSON(characterData));
+          const characters = response.map((characterData: RawCharacterData) => Character.fromJSON(characterData));
           return charactersActions.loadAllCharactersSuccess({ characters });
         }),
         catchError(() => EMPTY)

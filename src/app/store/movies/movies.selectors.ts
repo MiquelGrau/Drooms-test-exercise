@@ -19,3 +19,16 @@ export const selectMovieById = (movieId: string) => createSelector(
   selectAllMovies,
   (movies: Movie[]) => movies.find(movie => movie.id === movieId)
 );
+
+export const selectMoviesForCurrentCharacter = createSelector(
+  selectAllMovies,
+  (state: AppState) => state.characters.currentCharacter,
+  (movies, currentCharacter) => {
+    if (currentCharacter && currentCharacter.films) {
+      return movies.filter(movie => {
+        return currentCharacter.films.includes(movie.url);
+      });
+    }
+    return [];
+  }
+);

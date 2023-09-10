@@ -18,6 +18,6 @@ export class MoviesListComponent {
               private router: Router) {}
 
   ngOnInit() {
-    this.store.dispatch(moviesActions.loadMovies());
+    this.store.dispatch(moviesActions.loadAllMovies());
   }
 }
