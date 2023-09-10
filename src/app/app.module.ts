@@ -12,9 +12,9 @@ import { reducers, metaReducers } from './store';
 import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MoviesListComponent } from './movies-list/movies-list.component';
-import { MovieDetailComponent } from './movie-detail/movie-detail.component';
-import { CharacterDetailComponent } from './character-detail/character-detail.component';
+import { MoviesListComponent } from './pages/movies-list/movies-list.component';
+import { MovieDetailComponent } from './pages/movie-detail/movie-detail.component';
+import { CharacterDetailComponent } from './pages/character-detail/character-detail.component';
 import { MoviesEffects } from './store/movies/movies.effects';
 import { CharactersEffects } from './store/characters/characters.effects';
 

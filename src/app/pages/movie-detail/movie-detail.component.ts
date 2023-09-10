@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-import * as moviesActions from '../store/movies/movies.actions';
-import * as charactersActions from '../store/characters/characters.actions';
-import * as moviesSelectors from '../store/movies/movies.selectors';
-import * as charactersSelectors from '../store/characters/characters.selectors';
-import { AppState } from '../store';
+import * as moviesActions from '../../store/movies/movies.actions';
+import * as charactersActions from '../../store/characters/characters.actions';
+import * as moviesSelectors from '../../store/movies/movies.selectors';
+import * as charactersSelectors from '../../store/characters/characters.selectors';
+import { AppState } from '../../store';
 
 @Component({
   selector: 'app-movie-detail',
