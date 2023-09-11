@@ -1,17 +1,24 @@
-<div class="container mt-4" *ngIf="movie$ | async as movie">
-  <h1>{{ movie.title }}</h1>
-  <p><strong>Director:</strong> {{ movie.director }}</p>
-  <p><strong>Producer:</strong> {{ movie.producer }}</p>
-  <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-  <h2>Opening Crawl</h2>
-  <p>{{ movie.opening_crawl }}</p>
-  <h3>Characters</h3>
 
-  <div class="list-group" *ngIf="characters$ | async as characters">
-    <a [routerLink]="['/character', character.id]"
-       *ngFor="let character of characters"
-       class="list-group-item list-group-item-action">
-      {{ character.name }}
-    </a>
+<ng-container *ngIf="(isLoadingMovies$ | async) || (isLoadingCharacters$ | async); else content">
+  <app-spinner></app-spinner>
+</ng-container>
+
+<ng-template #content>
+  <div class="container mt-4" *ngIf="movie$ | async as movie">
+    <h1>{{ movie.title }}</h1>
+    <p><strong>Director:</strong> {{ movie.director }}</p>
+    <p><strong>Producer:</strong> {{ movie.producer }}</p>
+    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+    <h2>Opening Crawl</h2>
+    <p>{{ movie.opening_crawl }}</p>
+    <h3>Characters</h3>
+
+    <div class="list-group" *ngIf="characters$ | async as characters">
+      <a [routerLink]="['/character', character.id]"
+         *ngFor="let character of characters"
+         class="list-group-item list-group-item-action">
+        {{ character.name }}
+      </a>
+    </div>
   </div>
-</div>
+</ng-template>

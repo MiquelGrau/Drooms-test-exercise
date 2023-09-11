@@ -15,6 +15,9 @@ import { AppState } from '../../store';
 export class MovieDetailComponent implements OnInit {
   movie$ = this.store.select(moviesSelectors.selectCurrentMovie);
   characters$ = this.store.select(charactersSelectors.selectCharactersForCurrentMovie);
+  isLoadingMovies$ = this.store.select(moviesSelectors.selectIsLoading);
+  isLoadingCharacters$ = this.store.select(charactersSelectors.selectIsLoading);
+
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
 

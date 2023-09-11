@@ -6,6 +6,8 @@ import * as movieActions from '../../store/movies/movies.actions';
 import * as characterSelectors from '../../store/characters/characters.selectors';
 import * as movieSelectors from '../../store/movies/movies.selectors';
 import { AppState } from '../../store';
+import * as moviesSelectors from '../../store/movies/movies.selectors';
+import * as charactersSelectors from '../../store/characters/characters.selectors';
 
 @Component({
   selector: 'app-character-detail',
@@ -15,6 +17,8 @@ import { AppState } from '../../store';
 export class CharacterDetailComponent implements OnInit {
   character$ = this.store.select(characterSelectors.selectCurrentCharacter);
   movies$ = this.store.select(movieSelectors.selectMoviesForCurrentCharacter);
+  isLoadingMovies$ = this.store.select(moviesSelectors.selectIsLoading);
+  isLoadingCharacters$ = this.store.select(charactersSelectors.selectIsLoading);
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
 

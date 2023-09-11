@@ -18,11 +18,14 @@ export const initialState: CharactersState = {
 
 export const charactersReducer = createReducer(
   initialState,
-
+  on(CharactersActions.loadAllCharacters, (state) => ({ ...state, isLoading: true })),
   on(CharactersActions.loadAllCharactersSuccess, (state, { characters }) => ({ ...state, characters, isLoading: false })),
   on(CharactersActions.loadAllCharactersFailure, (state, { error }) => ({ ...state, error, isLoading: false })),
+  on(CharactersActions.noCharactersToLoad, (state) => ({ ...state, isLoading: false })),
 
   on(CharactersActions.loadCharacterDetails, (state) => ({ ...state, isLoading: true })),
-  on(CharactersActions.loadCharacterDetailsSuccess, (state, { character }) => ({ ...state, currentCharacter: character, isLoading: false })),
+  on(CharactersActions.loadCharacterDetailsSuccess, (state, { character }) =>
+    ({ ...state, currentCharacter: character, characters: [...state.characters, character], isLoading: false })
+  ),
   on(CharactersActions.loadCharacterDetailsFailure, (state, { error }) => ({ ...state, error, isLoading: false, currentCharacter: null }))
 );

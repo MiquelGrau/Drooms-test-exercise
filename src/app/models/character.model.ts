@@ -47,6 +47,22 @@ export class Character {
     const parts = url ? url.split('/') : [];
     return parts[parts.length - 2];
   }
+
+  /**
+   * Determines the page number based on a character's ID.
+   * This function accounts for anomalies in the API, such as the missing character with ID 17.
+   *
+   * @param id - The character's ID.
+   * @returns The page number the character is expected to be on.
+   */
+  public static getPageNumberForCharacterId(id: number): number {
+    if (id < 17) {
+      return Math.ceil(id / 10);
+    } else {
+      // Adjust for the missing 17
+      return Math.ceil((id - 1) / 10);
+    }
+  }
 }
 
 export interface RawCharacterData {

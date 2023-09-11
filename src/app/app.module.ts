@@ -17,13 +17,15 @@ import { MovieDetailComponent } from './pages/movie-detail/movie-detail.componen
 import { CharacterDetailComponent } from './pages/character-detail/character-detail.component';
 import { MoviesEffects } from './store/movies/movies.effects';
 import { CharactersEffects } from './store/characters/characters.effects';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MoviesListComponent,
     MovieDetailComponent,
-    CharacterDetailComponent
+    CharacterDetailComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,

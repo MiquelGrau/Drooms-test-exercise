@@ -32,3 +32,9 @@ export const selectMoviesForCurrentCharacter = createSelector(
     return [];
   }
 );
+
+export const selectIsLoading = createSelector(
+  selectMoviesState,
+  (state: MoviesState) => state.isLoading
+);
+

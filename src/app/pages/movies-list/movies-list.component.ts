@@ -11,6 +11,7 @@ import * as moviesSelectors from '../../store/movies/movies.selectors';
 })
 export class MoviesListComponent {
   movies$ = this.store.select(moviesSelectors.selectAllMovies);
+  isLoading$ = this.store.select(moviesSelectors.selectIsLoading);
 
   constructor(private store: Store<AppState>) {}
 

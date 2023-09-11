@@ -8,3 +8,4 @@ export const loadAllCharactersFailure = createAction('[Characters] Load All Char
 export const loadCharacterDetails = createAction('[Character] Load Character Details', props<{ characterId: string }>());
 export const loadCharacterDetailsSuccess = createAction('[Character] Load Character Details Success', props<{ character: Character }>());
 export const loadCharacterDetailsFailure = createAction('[Character] Load Character Details Failure', props<{ error: any }>());
+export const noCharactersToLoad = createAction('[Characters] No Characters To Load');
