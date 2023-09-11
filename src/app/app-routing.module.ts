@@ -7,7 +7,8 @@ import { CharacterDetailComponent } from './pages/character-detail/character-det
 const routes: Routes = [
   { path: '', component: MoviesListComponent },
   { path: 'movie/:id', component: MovieDetailComponent },
-  { path: 'character/:id', component: CharacterDetailComponent }
+  { path: 'character/:id', component: CharacterDetailComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

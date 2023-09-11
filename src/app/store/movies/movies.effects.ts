@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { EMPTY, of, withLatestFrom } from 'rxjs';
+import { EMPTY, of, throwError, withLatestFrom } from 'rxjs';
 import { map, mergeMap, catchError, switchMap } from 'rxjs/operators';
 import * as moviesActions from './movies.actions';
 import * as moviesSelectors from './movies.selectors';
@@ -25,7 +25,10 @@ export class MoviesEffects {
               const movies = response.results.map((movieData: RawMovieData) => Movie.fromJSON(movieData));
               return moviesActions.loadAllMoviesSuccess({ movies });
             }),
-            catchError(() => EMPTY)
+            catchError((error) => {
+              this.store.dispatch(moviesActions.loadAllMoviesFailure({ error }));
+              return throwError(() => error);
+            })
           );
       }
     })
@@ -49,7 +52,10 @@ export class MoviesEffects {
             const movie = Movie.fromJSON(movieData);
             return moviesActions.loadMovieDetailsSuccess({ movie });
           }),
-          catchError(() => EMPTY)
+          catchError((error) => {
+            this.store.dispatch(moviesActions.loadMovieDetailsFailure({ error }));
+            return throwError(() => error);
+          })
         );
     })
   ));

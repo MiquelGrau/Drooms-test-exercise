@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { StoreModule } from '@ngrx/store';
@@ -18,6 +18,8 @@ import { CharacterDetailComponent } from './pages/character-detail/character-det
 import { MoviesEffects } from './store/movies/movies.effects';
 import { CharactersEffects } from './store/characters/characters.effects';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { GlobalErrorHandler } from './services/global-error-handler.service';
+import { ErrorInterceptor } from './services/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,13 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     EffectsModule.forRoot([MoviesEffects, CharactersEffects]),
     StoreRouterConnectingModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

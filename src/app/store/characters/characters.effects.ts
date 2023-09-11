@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { combineLatest, concatMap, EMPTY, filter, iif, of, Subject, take, takeUntil, tap } from 'rxjs';
+import { combineLatest, concatMap, EMPTY, filter, iif, of, Subject, take, takeUntil, tap, throwError } from 'rxjs';
 import { map, mergeMap, catchError, switchMap } from 'rxjs/operators';
 import * as charactersActions from './characters.actions';
 import * as charactersSelectors from './characters.selectors';
@@ -9,6 +9,7 @@ import { SwapiService } from '../../services/swapi.service';
 import { Character, RawCharacterData } from '../../models/character.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../index';
+import * as moviesActions from '../movies/movies.actions';
 
 @Injectable()
 export class CharactersEffects {
@@ -40,7 +41,10 @@ export class CharactersEffects {
           }),
           // Here, we're adding the tap after successfully fetching the characters.
           tap(() => this.destroy$.next()),
-          catchError(() => EMPTY)
+          catchError((error) => {
+            this.store.dispatch(charactersActions.loadAllCurrentMovieCharactersFailure({ error }));
+            return throwError(() => error);
+          })
         ),
         of(charactersActions.noCharactersToLoad()).pipe(
           tap(() => this.destroy$.next())
@@ -67,7 +71,10 @@ export class CharactersEffects {
             const character = Character.fromJSON(characterData);
             return charactersActions.loadCharacterDetailsSuccess({ character });
           }),
-          catchError(() => EMPTY)
+          catchError((error) => {
+            this.store.dispatch(charactersActions.loadCharacterDetailsFailure({ error }));
+            return throwError(() => error);
+          })
         );
     })
   ));
