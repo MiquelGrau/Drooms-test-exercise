@@ -9,30 +9,14 @@ import { MoviesListComponent } from './movies-list.component';
 import * as moviesActions from '../../store/movies/movies.actions';
 import * as moviesSelectors from '../../store/movies/movies.selectors';
 import { mockMovies } from 'src/assets/mocks/mock-movie-data';
+import { appStateMock } from '../../../assets/mocks/app-state-data';
 
 describe('MoviesListComponent', () => {
   let component: MoviesListComponent;
   let fixture: ComponentFixture<MoviesListComponent>;
   let store: MockStore<AppState>;
 
-  const initialState: AppState = {
-    movies: {
-      movies: [],
-      currentMovie: null,
-      isLoading: false,
-      error: null
-    },
-    characters: {
-      characters: [],
-      currentCharacter: null,
-      isLoading: false,
-      error: null
-    },
-    router: {
-      state: null,
-      navigationId: 0
-    }
-  };
+  const initialState: AppState = appStateMock;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

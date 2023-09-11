@@ -12,30 +12,14 @@ import * as charactersSelectors from '../../store/characters/characters.selector
 import * as moviesSelectors from '../../store/movies/movies.selectors';
 import { mockCharacter } from 'src/assets/mocks/mock-character-data';
 import { mockMovies } from '../../../assets/mocks/mock-movie-data';
+import { appStateMock } from '../../../assets/mocks/app-state-data';
 
 describe('CharacterDetailComponent', () => {
   let component: CharacterDetailComponent;
   let fixture: ComponentFixture<CharacterDetailComponent>;
   let store: MockStore<AppState>;
 
-  const initialState: AppState = {
-    movies: {
-      movies: [],
-      currentMovie: null,
-      isLoading: false,
-      error: null
-    },
-    characters: {
-      characters: [],
-      currentCharacter: null,
-      isLoading: false,
-      error: null
-    },
-    router: {
-      state: null,
-      navigationId: 0
-    }
-  };
+  const initialState: AppState = appStateMock;
 
   const mockActivatedRoute = {
     snapshot: {

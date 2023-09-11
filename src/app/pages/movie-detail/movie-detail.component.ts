@@ -27,7 +27,7 @@ export class MovieDetailComponent implements OnInit {
     if (id) {
       const movieId = id;
       this.store.dispatch(moviesActions.loadMovieDetails({ movieId }));
-      this.store.dispatch(charactersActions.loadAllCharacters());
+      this.store.dispatch(charactersActions.loadAllCurrentMovieCharacters());
     }
   }
 }

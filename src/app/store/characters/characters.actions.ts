@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { Character } from '../../models/character.model';
 
-export const loadAllCharacters = createAction('[Characters] Load All Characters');
-export const loadAllCharactersSuccess = createAction('[Characters] Load All Characters Success', props<{ characters: Character[] }>());
-export const loadAllCharactersFailure = createAction('[Characters] Load All Characters Failure', props<{ error: any }>());
+export const loadAllCurrentMovieCharacters = createAction('[Characters] Load All Current Movie Characters');
+export const loadAllCurrentMovieCharactersSuccess = createAction('[Characters] Load All Current Movie Characters Success', props<{ characters: Character[] }>());
+export const loadAllCurrentMovieCharactersFailure = createAction('[Characters] Load All Current Movie Characters Failure', props<{ error: any }>());
 
 export const loadCharacterDetails = createAction('[Character] Load Character Details', props<{ characterId: string }>());
 export const loadCharacterDetailsSuccess = createAction('[Character] Load Character Details Success', props<{ character: Character }>());

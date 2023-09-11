@@ -4,7 +4,7 @@
 </ng-container>
 
 <ng-template #content>
-  <div class="container mt-4" *ngIf="character$ | async as character">
+  <div class="container my-4" *ngIf="character$ | async as character">
     <h1>{{ character.name }}</h1>
     <p><strong>Birth Year:</strong> {{ character.birth_year }}</p>
     <p><strong>Gender:</strong> {{ character.gender }}</p>

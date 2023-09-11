@@ -12,30 +12,14 @@ import * as charactersSelectors from '../../store/characters/characters.selector
 import * as moviesSelectors from '../../store/movies/movies.selectors';
 import { mockCharacters } from 'src/assets/mocks/mock-character-data';
 import { mockMovie } from '../../../assets/mocks/mock-movie-data';
+import { appStateMock } from '../../../assets/mocks/app-state-data';
 
 describe('MovieDetailComponent', () => {
   let component: MovieDetailComponent;
   let fixture: ComponentFixture<MovieDetailComponent>;
   let store: MockStore<AppState>;
 
-  const initialState: AppState = {
-    movies: {
-      movies: [],
-      currentMovie: null,
-      isLoading: false,
-      error: null
-    },
-    characters: {
-      characters: [],
-      currentCharacter: null,
-      isLoading: false,
-      error: null
-    },
-    router: {
-      state: null,
-      navigationId: 0
-    }
-  };
+  const initialState: AppState = appStateMock;
 
   const mockActivatedRoute = {
     snapshot: {
@@ -70,7 +54,7 @@ describe('MovieDetailComponent', () => {
   it('should dispatch the correct actions on ngOnInit', () => {
     component.ngOnInit();
     expect(store.dispatch).toHaveBeenCalledWith(moviesActions.loadMovieDetails({ movieId: '1' }));
-    expect(store.dispatch).toHaveBeenCalledWith(charactersActions.loadAllCharacters());
+    expect(store.dispatch).toHaveBeenCalledWith(charactersActions.loadAllCurrentMovieCharacters());
   });
 
   it('should render a list of characters', fakeAsync(() => {

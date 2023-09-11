@@ -18,9 +18,17 @@ export const initialState: CharactersState = {
 
 export const charactersReducer = createReducer(
   initialState,
-  on(CharactersActions.loadAllCharacters, (state) => ({ ...state, isLoading: true })),
-  on(CharactersActions.loadAllCharactersSuccess, (state, { characters }) => ({ ...state, characters, isLoading: false })),
-  on(CharactersActions.loadAllCharactersFailure, (state, { error }) => ({ ...state, error, isLoading: false })),
+  on(CharactersActions.loadAllCurrentMovieCharacters, (state) => ({ ...state, isLoading: true })),
+  on(CharactersActions.loadAllCurrentMovieCharactersSuccess, (state, { characters }) => {
+    const updatedCharacters = [...state.characters];
+    characters.forEach(character => {
+      if (!updatedCharacters.some(existingChar => existingChar.url === character.url)) {
+        updatedCharacters.push(character);
+      }
+    });
+    return { ...state, characters: updatedCharacters, isLoading: false };
+  }),
+  on(CharactersActions.loadAllCurrentMovieCharactersFailure, (state, { error }) => ({ ...state, error, isLoading: false })),
   on(CharactersActions.noCharactersToLoad, (state) => ({ ...state, isLoading: false })),
 
   on(CharactersActions.loadCharacterDetails, (state) => ({ ...state, isLoading: true })),

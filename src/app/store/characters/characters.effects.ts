@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { EMPTY, filter, of, take, tap } from 'rxjs';
+import { combineLatest, concatMap, EMPTY, filter, iif, of, Subject, take, takeUntil, tap } from 'rxjs';
 import { map, mergeMap, catchError, switchMap } from 'rxjs/operators';
 import * as charactersActions from './characters.actions';
 import * as charactersSelectors from './characters.selectors';
@@ -12,40 +12,40 @@ import { AppState } from '../index';
 
 @Injectable()
 export class CharactersEffects {
+  private destroy$ = new Subject<void>();
 
   loadAllCharacters$ = createEffect(() => this.actions$.pipe(
-    ofType(charactersActions.loadAllCharacters),
+    ofType(charactersActions.loadAllCurrentMovieCharacters),
     switchMap(() =>
-      this.store.select(moviesSelectors.selectCurrentMovie).pipe(
-        filter(currentMovie => !!currentMovie),
-        switchMap(currentMovie => {
-          // Get the character URLs from the current movie
-          const movieCharacterUrls = currentMovie ? currentMovie.characters : [];
-
-          // Get the currently stored characters to determine which ones are missing
-          return this.store.select(charactersSelectors.selectAllCharacters).pipe(
-            map(storedCharacters => {
-              const storedCharacterUrls = storedCharacters.map(character => character.url);
-              const missingCharacterUrls = movieCharacterUrls.filter(url => !storedCharacterUrls.includes(url));
-              return missingCharacterUrls;
-            })
-          )
-        })
-      )
+      combineLatest([
+        this.store.select(moviesSelectors.selectCurrentMovie),
+        this.store.select(charactersSelectors.selectAllCharacters)
+      ]).pipe(takeUntil(this.destroy$))
     ),
-    mergeMap(missingCharacterUrls => {
-      if (missingCharacterUrls && missingCharacterUrls.length > 0) {
-        return this.swapiService.getAllCharactersForMovie(missingCharacterUrls)
-          .pipe(
-            map(response => {
-              const characters = response.map((characterData: RawCharacterData) => Character.fromJSON(characterData));
-              return charactersActions.loadAllCharactersSuccess({ characters });
-            }),
-            catchError(() => EMPTY)
-          );
-      } else {
-        return of(charactersActions.noCharactersToLoad());
-      }
+    filter(([currentMovie, _]) => !!currentMovie),
+    map(([currentMovie, storedCharacters]) => {
+      const movieCharacterUrls = currentMovie!.characters || [];
+      const storedCharacterUrls = storedCharacters.map(character => character.url);
+      const missingCharacterUrls = movieCharacterUrls.filter(url => !storedCharacterUrls.includes(url));
+      return { missingCharacterUrls, storedCharacters };
+    }),
+    switchMap(({ missingCharacterUrls }) => {
+      // Use iif to determine which observable chain to execute
+      return iif(
+        () => missingCharacterUrls.length > 0,
+        this.swapiService.getAllCharactersForMovie(missingCharacterUrls).pipe(
+          map(response => {
+            const characters = response.map((characterData: RawCharacterData) => Character.fromJSON(characterData));
+            return charactersActions.loadAllCurrentMovieCharactersSuccess({ characters });
+          }),
+          // Here, we're adding the tap after successfully fetching the characters.
+          tap(() => this.destroy$.next()),
+          catchError(() => EMPTY)
+        ),
+        of(charactersActions.noCharactersToLoad()).pipe(
+          tap(() => this.destroy$.next())
+        )
+      );
     })
   ));
 
