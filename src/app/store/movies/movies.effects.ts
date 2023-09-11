@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, withLatestFrom } from 'rxjs';
 import { map, mergeMap, catchError, switchMap } from 'rxjs/operators';
 import * as moviesActions from './movies.actions';
 import * as moviesSelectors from './movies.selectors';
@@ -14,15 +14,23 @@ export class MoviesEffects {
 
   loadMovies$ = createEffect(() => this.actions$.pipe(
     ofType(moviesActions.loadAllMovies),
-    mergeMap(() => this.swapiService.getAllMovies()
-      .pipe(
-        map(response => {
-          const movies = response.results.map((movieData: RawMovieData) => Movie.fromJSON(movieData));
-          return moviesActions.loadAllMoviesSuccess({ movies });
-        }),
-        catchError(() => EMPTY)
-      ))
+    withLatestFrom(this.store.select(moviesSelectors.selectAllMovies)),
+    mergeMap(([action, allMovies]) => {
+      if (allMovies && allMovies.length > 1) {
+        return of(moviesActions.loadAllMoviesSuccess({ movies: allMovies }));
+      } else {
+        return this.swapiService.getAllMovies()
+          .pipe(
+            map(response => {
+              const movies = response.results.map((movieData: RawMovieData) => Movie.fromJSON(movieData));
+              return moviesActions.loadAllMoviesSuccess({ movies });
+            }),
+            catchError(() => EMPTY)
+          );
+      }
+    })
   ));
+
 
   loadMovieDetails$ = createEffect(() => this.actions$.pipe(
     ofType(moviesActions.loadMovieDetails),

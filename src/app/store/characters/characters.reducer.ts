@@ -24,8 +24,22 @@ export const charactersReducer = createReducer(
   on(CharactersActions.noCharactersToLoad, (state) => ({ ...state, isLoading: false })),
 
   on(CharactersActions.loadCharacterDetails, (state) => ({ ...state, isLoading: true })),
-  on(CharactersActions.loadCharacterDetailsSuccess, (state, { character }) =>
-    ({ ...state, currentCharacter: character, characters: [...state.characters, character], isLoading: false })
-  ),
+  on(CharactersActions.loadCharacterDetailsSuccess, (state, { character }) => {
+    const characterExists = state.characters.some(char => char.id === character.id);
+
+    let updatedCharacters;
+    if (characterExists) {
+      updatedCharacters = state.characters.map(char => char.id === character.id ? character : char);
+    } else {
+      updatedCharacters = [...state.characters, character];
+    }
+
+    return {
+      ...state,
+      currentCharacter: character,
+      characters: updatedCharacters,
+      isLoading: false
+    };
+  }),
   on(CharactersActions.loadCharacterDetailsFailure, (state, { error }) => ({ ...state, error, isLoading: false, currentCharacter: null }))
 );

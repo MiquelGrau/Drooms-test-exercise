@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { EMPTY, filter, of } from 'rxjs';
+import { EMPTY, filter, of, take, tap } from 'rxjs';
 import { map, mergeMap, catchError, switchMap } from 'rxjs/operators';
 import * as charactersActions from './characters.actions';
 import * as charactersSelectors from './characters.selectors';
@@ -53,10 +53,11 @@ export class CharactersEffects {
     ofType(charactersActions.loadCharacterDetails),
     switchMap(action =>
       this.store.select(charactersSelectors.selectCharacterById(action.characterId)).pipe(
+        take(1),
         map(storedCharacter => ({ action, storedCharacter }))
       )
     ),
-    mergeMap(({ action, storedCharacter }) => {
+    switchMap(({ action, storedCharacter }) => {
       if (storedCharacter) {
         return of(charactersActions.loadCharacterDetailsSuccess({ character: storedCharacter }));
       }
