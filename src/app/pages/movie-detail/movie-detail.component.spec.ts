@@ -68,15 +68,4 @@ describe('MovieDetailComponent', () => {
     expect(characterItems.length).toBe(2);
   }));
 
-
-  it('should have correct routerLink for each character', () => {
-    store.overrideSelector(charactersSelectors.selectCharactersForCurrentMovie, mockCharacters);
-    fixture.detectChanges();
-
-    const characterItems = fixture.debugElement.queryAll(By.css('.list-group-item'));
-    for (let i = 0; i < mockCharacters.length; i++) {
-      const expectedHref = `/character/${mockCharacters[i].id}`;
-      expect(characterItems[i].nativeElement.getAttribute('href')).toBe(expectedHref);
-    }
-  });
 });

@@ -1,7 +1,5 @@
-import { Component, ElementRef, AfterViewInit, OnInit } from '@angular/core';
-import { ParticlesConfig } from '../assets/particlesjs-config';
-
-declare let particlesJS: any;
+import { Component, OnInit } from '@angular/core';
+import { ParticleService } from './services/particle.service';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +7,10 @@ declare let particlesJS: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Drooms-test-exercise';
 
-  constructor(private el: ElementRef) {}
+  constructor(private particleService: ParticleService) { }
 
-  public ngOnInit(): void {
-    this.invokeParticles();
-  }
-
-  public invokeParticles(): void {
-    particlesJS('particles-js', ParticlesConfig, function() {});
+  ngOnInit(): void {
+    this.particleService.invokeParticles('particles-js');
   }
 }
