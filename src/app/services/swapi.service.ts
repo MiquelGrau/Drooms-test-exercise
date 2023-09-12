@@ -52,7 +52,7 @@ export class SwapiService {
   }
 }
 
-interface SWAPIResponse {
+export interface SWAPIResponse {
   count: number;
   next: string | null;
   previous: string | null;
